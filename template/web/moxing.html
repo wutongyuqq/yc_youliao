@@ -1,0 +1,27 @@
+<select name="fuzhi" class="form-control" id="neizhi-item">
+    <option value="">--系统自带频道--</option>
+    <option value="neizhi1">房屋出租 </option>
+    <option value="neizhi3">企业招聘 </option>
+    <option value="neizhi5">个人求职 </option>
+    <option value="neizhi2">同城交友 </option>
+    <option value="neizhi4">二手物品 </option>
+    <option value="neizhi6">拼车出行 </option>
+    <option value="neizhi7">寻人寻物 </option>
+    <option value="neizhi8">本地活动 </option>
+    <option value="neizhi10">代办跑腿 </option>
+    <option value="neizhi11">家有宠物 </option>
+    {if $modulelist}
+    <option value="">--已建成频道--</option>
+    {loop $modulelist $mrow}
+    {if $mrow['children']}
+    <optgroup label="{$mrow['name']}【已建成频道】">
+        {loop $mrow['children'] $mrowrow}
+        <option value ="{$mrowrow['id']}">┗ {$mrowrow['name']}【已建成频道】</option>
+        {/loop}
+    </optgroup>
+    {else}
+    <option value="{$mrow['id']}">{$mrow['name']}【已建成频道】</option>
+    {/if}
+    {/loop}
+    {/if}
+</select>

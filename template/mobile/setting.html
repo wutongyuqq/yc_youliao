@@ -1,0 +1,42 @@
+{template '../mobile/header'}
+<link  href="{STYLE}css/user.css" rel="stylesheet" type="text/css"/>
+<div class="aui-content aui-card">
+    <div class="li-title">消息推送</div>
+    <ul class="aui-list-view">
+        <input type="hidden" id="mid" value="{$userinfo['id']}"/>
+        <input type="hidden" id="settingid" value="{$setData['id']}"/>
+
+        <li class="aui-list-view-cell aui-switch-body aui-redmsg">
+            <div class="aui-switch-title ">待办任务提醒(发红包通知)</div>
+            <input type="checkbox"  id="aui-redmsg" class="aui-switch aui-pull-right" {if empty($setData) || $setData['red_msg']==1}checked{/if}>
+        </li>
+        
+
+        <li class="aui-list-view-cell aui-switch-body aui-footer">
+            <div class="aui-switch-title ">记录足迹</div>
+            <input type="checkbox"  id="aui-footer" class="aui-switch aui-pull-right" {if $setData['footer']==1}checked{/if}>
+        </li>
+    </ul>
+</div>
+<script>
+    $(".aui-redmsg").click(function() {
+        var status=0;
+        if($('#aui-redmsg').is(':checked')) {
+            status=1;
+        }
+        proSetting('red_msg',status);
+
+    });
+
+    $(".aui-footer").click(function() {
+        var status=0;
+        if($('#aui-footer').is(':checked')) {
+            status=1;
+        }
+        proSetting('footer',status);
+
+    });
+
+</script>
+{template '../mobile/footer'}
+

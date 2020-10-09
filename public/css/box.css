@@ -1,0 +1,93 @@
+/*弹出框*/
+
+.reason-box {
+    position: absolute;
+    font-size: 12px;
+    overflow: hidden;
+    z-index: 999;
+    border-radius: 5px;
+    width: 70%;
+    left: 15%;
+    box-shadow: 5px 5px 5px #00000052;
+    padding-bottom: 8px;
+    margin-top: -120px;
+    background: #fff;
+}
+textarea.reason, .info textarea.reason {
+    width: 90%;
+    line-height: 30px;
+    border: 1px solid #ccc;
+    padding: 0 5px;
+    color: #777;
+}
+.reason-box .top {
+    height: 40px;
+    background-image: -webkit-linear-gradient(left,#03a9f4,#45c2fc);
+    float: left;
+    width: 100%;
+}
+.reason-box .top .title-content {
+    height: 100%;
+    padding-right: 6px;
+}
+.top .title-content .title {
+    height: 100%;
+    line-height: 40px;
+    color: #fff;
+    vertical-align: middle;
+    font-size: 14px;
+    overflow: hidden;
+    text-align: center;
+}
+.reason-box .body {
+    background: #fff;
+    padding-left: 10px;
+}
+.body .title-content .ct {
+    line-height: 50px;
+    vertical-align: middle;
+    width: 100%;
+    text-align: left;
+    color: #777;
+    font-size: 14px;
+}
+.reason-box .bottom {
+    height: 45px;
+    padding-left: 6px;
+}
+.bottom .title-content {
+    height: 100%;
+    padding-right: 6px;
+}
+.dvMsgBtns {
+    text-align: center;
+    width: 100%;
+}
+.reason-box .height {
+    height: 10px;
+    line-height: 10px;
+}
+.reason-box .reason-btn {
+    border-radius: 3px;
+    cursor: pointer;
+    color: #fff;
+    border: none;
+    height: 30px;
+    text-align: center;
+    background-color: #03a9f4;
+    display: block;
+    float: left;
+    line-height: 30px;
+    margin: 5px 9%;
+    width: 30%;
+}
+.reason-box .btn2{
+    color: #777;
+    background: #fff;
+    border: 1px solid #ccc;
+}
+input.reason {
+    line-height: 30px;
+    width: 90%;
+    margin: 5px 0;
+}

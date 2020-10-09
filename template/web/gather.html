@@ -1,0 +1,185 @@
+{template 'web/header'}
+{template 'web/left'}
+<script type="text/javascript" src="{STYLE}/js/cascade.js"></script>
+<section id="content">
+	<section class="vbox">
+		<section class="scrollable padder">
+			<ul class="breadcrumb no-border no-radius b-b b-light pull-in">
+				<li class="active"><a href="{php echo $this->createWebUrl("index")}"><i class="fa fa-home"></i>首页</a></li>
+				<li class="active">同城频道</li>
+				<li class="active">信息采集</li>
+			</ul>
+
+			<ul class="nav nav-tabs">
+				<li {if $op == 'display'} class="active" {/if}><a href="{php echo $this->createWebUrl('info',array('op' =>'display'))}">信息采集</a></li>
+
+			</ul>
+			<div class="main">
+				<div class="panel panel-info">
+			{if $op == 'display'}
+		<div class="panel margin-10  "style="padding-top: 20px" >
+			<form data-url="{php echo $this->createWebUrl('gather', array('op' =>'post'))}" method="post" class="form-horizontal form" id="info-form" enctype="multipart/form-data">
+				<div class="panel-default">
+					<div class="form-group">
+						<label for="" class="col-sm-1 control-label"><span class="red">*</span> 采集频道：</label>
+							<div class="col-sm-4 col-xs-4">
+								<select name="fuzhi" class="form-control" id="neizhi-item">
+								    <option value="">--系统自带频道--</option>
+								    <option value="neizhi1">房屋出租 </option>
+								    <option value="neizhi3">企业招聘 </option>
+								    <option value="neizhi5">个人求职 </option>
+								    <option value="neizhi2">同城交友 </option>
+								    <option value="neizhi4">二手物品 </option>
+								    <option value="neizhi10">代办跑腿 </option>
+								    <option value="neizhi11">家有宠物 </option>
+								</select>
+							</div>
+						</div>
+					</div>
+			<div class="form-group">
+				<label for="" class="col-sm-1 control-label"><span class="red">*</span>采集区域：</label>
+				<div class="col-sm-9">
+				<div class="col-sm-9 col-lg-9 col-xs-12">
+			<select id="sel-provance" onChange="selectCity();" name="gather-province" class="pull-left form-control" style="width:30%; margin-right:5%;" autocomplete = 'off '>
+				<option value="" selected="true">省/直辖市</option>
+			</select>
+			<select id="sel-city" onChange="selectcounty()" name="gather-city" class="pull-left form-control" style="width:30%; margin-right:5%;" autocomplete = 'off '>
+				<option value="" selected="true">请选择</option>
+			</select>
+			<select id="sel-area" class="pull-left form-control" name="gather-district" style="width:30%;" autocomplete = 'off '>
+				<option value="" selected="true">请选择</option>
+			</select>
+				</div>
+
+				</div>
+			</div>
+				<div class="form-group">
+					<label for="" class="col-sm-1 control-label">采集页码</label>
+					<div class="col-sm-3">
+						<div class="col-sm-4  input-group">
+							<input type="text" name="page" class="form-control" value="1" />
+							<span class="input-group-addon">页</span>
+						</div>
+						<p class="help-block ">为避免重复采集，数据将分页采集</p>
+					</div>
+					<div class="col-sm-2">
+							<span class="btn btn-info" onclick="gatherCheck('{php echo $this->createWebUrl("gather", array('op' => 'list'))}')">开始采集</span>
+					</div>
+			
+				</div>
+				<table class="table table-stripped">
+					<thead>
+						<tr>
+							<th style="width: 80px;">选择</th>
+							<th>标题</th>
+							<th>联系人</th>
+							<th>手机</th>
+							<th>电话</th>
+							<th>微信</th>
+						</tr>
+					</thead>
+					<tbody id="collect">
+					</tbody>
+				</table>
+				<div class="panel panel-default">
+			<div class="panel-heading">模型&发布人</div>
+			<div class="panel-body">
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">选择模型</label>
+					<div class="col-sm-9 col-xs-12">
+						<select id="gatherMid" class="form-control">
+							<option value="0">--请选择模型--</option>
+							{loop $mdlist $mrow}
+								{if $mrow['children']}
+									<optgroup label="{$mrow['name']}">
+										{loop $mrow['children'] $mrowrow}
+										<option value ="{$mrowrow['id']}" {if $mrowrow['id'] == $message['mid']}selected="selected"{/if}>┗ {$mrowrow['name']}</option>
+										{/loop}
+									</optgroup>
+								{else}
+									<option value="{$mrow['id']}" {if $mrow['id'] == $message['mid']}selected="selected"{/if}>{$mrow['name']}</option>
+								{/if}
+								
+							{/loop}
+						</select>
+					</div>
+				</div>
+				<!-- 选择发布人或者马甲 -->
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label"><span class="red">*</span>发布人</label>
+					<div class="col-sm-6 col-xs-6">
+						<input type="radio" name="gatherPoster" value="1" checked> 粉丝
+						<input type="radio" name="gatherPoster" value="2"> 马甲
+					</div>
+				</div>
+				<div class="form-group" id="gatherFans">
+					<div class="col-sm-offset-3 col-md-offset-2 col-sm-6 col-xs-6">
+						<div class="input-group">
+							<input type="text" class="form-control" name="keyword" value="" id="search-kwd" placeholder="请输入粉丝昵称/姓名/手机号/用户编号" />
+							<span class='input-group-btn'><button type="button" class="btn btn-default" onclick="search_members();">搜索</button></span>
+						</div>
+						<input type='hidden' id='openid' name='gatherOpenid' value="{if $_GPC['openid']}{$_GPC['openid']}{else}{$item['openid']}{/if}" />
+						<span class='shop-logo'><img  id="picc" src="{if $_GPC['avatar']}{$_GPC['avatar']}{else}{$item['avatar']}{/if}" onerror="this.src='../addons/yc_youliao/public/images/avatar_default.jpg'"/><span id='nickname'>{if $_GPC['nickname']}{php echo $_GPC['nickname']}{else}{php echo $item['nickname']}{/if}</span>
+						<div id="module-menus"></div>
+					</div>
+				</div>
+				<div class="form-group" id="gatherMajia" style="display: none;">
+					<div class="col-sm-offset-3 col-md-offset-2 col-sm-6 col-xs-6">
+						<select name="gatherMajiaAvatar" class="form-control">
+							<option value="0">随机头像</option>
+							<option value="1">头像1</option>
+							<option value="2">头像2</option>
+							<option value="3">头像3</option>
+							<option value="4">头像4</option>
+							<option value="5">头像5</option>
+							<option value="6">头像6</option>
+							<option value="7">头像7</option>
+							<option value="8">头像8</option>
+						</select>
+						<br>
+						<div><img src="{STYLE}images/tx{php echo rand(1,8)}.gif" width="60" class="img-responsive" id="gatherMajiaImg"></div>
+						<br>
+						<div><input type="text" name="gatherMajiaName" class=form-control value="" placeholder="马甲名" maxlength="10" style="width: 200px;"></div>
+					</div>
+				</div>
+			</div>
+				<div class=" col-sm-12 form-submit" style="margin-top: 20px">
+					<span class="btn btn-primary" onclick="dataStore()"/>提交</span>
+				</div>
+		</div>
+						</form>
+
+				</div>
+				{/if}
+			</div>
+			</div>
+		</section>
+	</section>
+</section>
+<script>
+   $(function () {
+       cascdeInit('','','');
+       // 发布人选择 马甲或粉丝
+       $('input[name="gatherPoster"]').change(function(){
+       		if($(this).val() == 1) {
+       			$("#gatherMajia").hide();
+       			$("#gatherFans").show();
+       		} else {
+       			$("#gatherFans").hide();
+       			$("#gatherMajia").show();
+       		}
+       });
+
+       // 马甲头像响应
+       $("#gatherMajia select").change(function(){
+       	var imgArr = ["{STYLE}images/tx1.gif", "{STYLE}images/tx2.gif", "{STYLE}images/tx3.gif", "{STYLE}images/tx4.gif", 
+       					"{STYLE}images/tx5.gif", "{STYLE}images/tx6.gif", "{STYLE}images/tx7.gif", "{STYLE}images/tx8.gif"];
+       		let val = parseInt($(this).val());
+       		if (val === 0) {
+       			val = 1;
+       		}
+       		$("#gatherMajiaImg").attr("src",imgArr[val - 1]);
+       });
+	})
+</script>
+{template 'web/footer'}

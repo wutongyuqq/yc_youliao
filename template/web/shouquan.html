@@ -1,0 +1,55 @@
+{template 'web/header'}
+{template 'web/left'}
+
+   <section id="content">
+        <section class="vbox">
+          <section class="padder">
+            <ul class="breadcrumb no-border no-radius b-b b-light pull-in">
+              <li><a href="{php echo $this->createWebUrl('index')}"><i class="fa fa-home"></i>首页</a></li>
+              <li class="active">系统设置</li>
+                <li class="active">授权管理</li>
+              
+            </ul>
+
+
+
+
+<div class="margin-10 setting">
+      <form action="" method="post" class="form-horizontal form">
+          <!--基础设置开始-->
+          <a name="fabu" id="fabu"></a>
+
+
+              <div class="panel panel-info none" {if $op=='shouquan'}style="display:block;"{/if}>
+                  <div class="panel-heading">授权设置</div>
+                  <div class="panel-body">
+                      <div class="form-group">
+                          <label class="col-xs-12 col-sm-3 col-md-2 control-label">appid</label>
+                          <div class="col-sm-4 col-xs-4 ">
+                              <input type="code" name="mh_appid"  class="form-control" value="{$mh_appid}" />
+                              <p class="help-block">请联系开发者索取</p>
+                          </div>
+                      </div>
+                      <div class="form-group">
+                          <label class="col-xs-12 col-sm-3 col-md-2 control-label">appkey</label>
+                          <div class="col-sm-4 col-xs-4 ">
+                              <input  type="password"  name="mh_appkey"  {if $mh_appid}placeholder="**********" {/if} class="form-control" value="" />
+                              <p class="help-block">请联系开发者索取</p>
+                          </div>
+                      </div>
+                  </div>
+
+    <div class="width100 ">
+        <input name="submit" type="submit" value="提交" class="btn btn-primary">
+        <input type="hidden" name="token" value="{$_W['token']}" />
+    </div>
+    </form>
+
+      </form>
+  </div>
+</section>
+</section>
+</section>
+
+
+{template 'web/footer'}

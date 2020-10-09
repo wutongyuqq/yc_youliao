@@ -1,0 +1,13 @@
+<link  href="{STYLE}css/scan.css" rel="stylesheet" type="text/css">
+<div id="home-hd-bar">
+    <a href="{php echo $this->createMobileUrl('changeadd')}">
+        <div class="city-layout">
+            <span id="nowcity">{php echo $this->getAddress()}</span>
+        </div>
+    </a>
+    <div class="search-layout">
+        <a href="{php echo $this->createMobileUrl('search',array('type'=>2));}">  <span class="search iconfont"><img src="{STYLE}images/b_search.png"/></span></a>
+        <span class="icon iconfont" id="scan"><img src="{STYLE}images/g_scan.png"/></span>
+    </div>
+
+</div>

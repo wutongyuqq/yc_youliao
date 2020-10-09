@@ -1,0 +1,78 @@
+{template '../mobile/header'}
+<link  href="{STYLE}css/index.css" rel="stylesheet" type="text/css">
+{php $advs= commonGetData::getAdv(17);}
+{if !empty($advs)}
+{template '../mobile/adv1'}
+{/if}
+<div class="redTop" >
+    <div class="topBan">
+        <div class="t-haf checked" data-id="0">土豪榜</div>
+        <div class="t-haf" data-id="1">抢钱榜</div>
+        <div class="t-mask"></div>
+    </div>
+    <div class="topListWap">
+        <div class="ulWap clearfix">
+            <ul class="money type0">
+                {php $i=1}
+               {loop $tlist $item}
+                <li class="list">
+                    {if $i==1}
+                    <img class="bang-img" src="{STYLE}images/bang_01.gif">
+                    {elseif $i==2}
+                    <img class="bang-img" src="{STYLE}images/bang_02.gif">
+                    {elseif $i==3}
+                    <img class="bang-img" src="{STYLE}images/bang_03.gif">
+                    {/if}
+                    <div class="avatar">
+
+                        <img class="img" src="{$item['avatar']}"></div>
+                    <div class="name">
+                        <p class="t">{$item['nickname']}</p>
+                        <p class="b">第{$i}名</p>
+                    </div>
+                    <div class="num">
+                        <span class="icon"></span>
+                        <span style="color:#fb5100;">{$item['amount']}</span>
+                    </div>
+                </li>
+                {php $i++}
+                {/loop}
+            </ul>
+            <ul class="money type1">
+                {php $y=1}
+                {loop  $qlist $item}
+                <li class="list">
+                    <div class="avatar">
+                        {if $y==1}
+                        <img class="bang-img" src="{STYLE}images/bang_01.gif">
+                        {elseif $y==2}
+                        <img class="bang-img" src="{STYLE}images/bang_02.gif">
+                        {elseif $y==3}
+                        <img class="bang-img" src="{STYLE}images/bang_03.gif">
+                        {/if}
+                        <img class="bang-img" src="{$item['avatar']}"></div>
+                    <div class="name">
+                        <p class="t">{$item['nickname']}</p>
+                        <p class="b">第{$y}名</p>
+                    </div>
+                    <div class="num">
+                        <span class="icon"></span>
+                        <span style="color:#fb5100;">{$item['amount']}</span>
+                    </div>
+                </li>
+                {php $y++}
+                {/loop}
+            </ul>
+        </div>
+    </div>
+</div>
+<script>
+    $('.t-haf').on('click', function () {
+        var _this = $(this)
+        _this.siblings('.checked').removeClass('checked')
+        _this.addClass('checked')
+        $('.t-mask').css({ 'transform': 'translateX(' + _this.data('id') + '00%)' })
+        $('.ulWap').css({ 'transform': 'translateX(-' + _this.data('id') * 50 + '%)' })
+    })
+</script>
+{template '../mobile/footer'}
